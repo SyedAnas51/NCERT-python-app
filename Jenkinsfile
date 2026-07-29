@@ -22,7 +22,7 @@ pipeline {
 
         stage('Unit Tests') {
             steps {
-                sh 'pytest --junitxml=results.xml'
+                sh 'python3 -m pytest --junitxml=results.xml'
             }
             post {
                 always {
