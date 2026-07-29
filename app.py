@@ -1,4 +1,3 @@
-cat > app.py << 'EOF'
 """
 @Author: Pranta Sarker
 Institute: North East University Bangladesh
@@ -96,4 +95,3 @@ if __name__ == "__main__":
 
     root.resizable(False, False)
     root.mainloop()
-EOF

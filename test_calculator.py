@@ -1,4 +1,3 @@
-cat > test_calculator.py << 'EOF'
 import pytest
 from calculator import is_number, casting, add, subtract, multiply, divide
 
@@ -44,4 +43,3 @@ def test_divide():
 def test_divide_by_zero():
     with pytest.raises(ZeroDivisionError):
         divide(10, 0)
-EOF
