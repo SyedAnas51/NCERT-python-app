@@ -17,3 +17,18 @@ spec:
       - name: calculator-app
         image: calculator-app:latest
         imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calculator-service
+  namespace: dev
+spec:
+  selector:
+    app: calculator-app
+  ports:
+  - port: 5000
+    targetPort: 5000
+  type: ClusterIP
