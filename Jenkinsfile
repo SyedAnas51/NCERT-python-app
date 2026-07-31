@@ -22,7 +22,7 @@ pipeline {
 
         stage('Unit Tests') {
             steps {
-                sh 'python3 -m pytest --junitxml=results.xml'
+                sh 'python3 -m pytest --junitxml=results.xml --cov=. --cov-report=xml'
             }
             post {
                 always {
