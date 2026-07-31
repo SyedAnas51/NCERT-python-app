@@ -57,11 +57,11 @@ pipeline {
         stage('OWASP ZAP DAST Scan') {
             steps {
                 sh '''
-                    docker run -d --name calc-zap-target --network jenkins-network -p 5050:5000 calculator-app:$BUILD_NUMBER
-                    sleep 5
-                    docker run --rm --network jenkins-network -v $(pwd):/zap/wrk/:rw -t zaproxy/zap-stable zap-baseline.py -t http://calc-zap-target:5000 -r zap-report.html || true
-                    docker rm -f calc-zap-target
-                '''
+    docker run -d --name calc-zap-target --network jenkins-network -p 5050:5000 calculator-app:$BUILD_NUMBER
+    sleep 5
+    docker run --rm --network jenkins-network -v "$(pwd):/zap/wrk/:rw" -t zaproxy/zap-stable zap-baseline.py -t http://calc-zap-target:5000 -r zap-report.html || true
+    docker rm -f calc-zap-target
+'''
             }
             post {
                 always {
