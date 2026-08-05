@@ -20,7 +20,32 @@ pipeline {
             }
         }
 
-        stage('Unit Tests') {
+        stage('Trivy Image Scan') {
+            steps {
+                sh 'trivy image --exit-code 0 --severity HIGH,CRITICAL --format table $DOCKER_IMAGE | tee trivy-report.txt'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'trivy-report.txt', allowEmptyArchive: true
+                }
+            }
+        }
+        stage('Grype Image Scan') {
+            steps {
+                sh 'grype $DOCKER_IMAGE --output table | tee grype-report.txt'
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'grype-report.txt', allowEmptyArchive: true
+                }
+            }
+        }
+
+
+
+
+
+	stage('Unit Tests') {
             steps {
                 sh 'python3 -m pytest --junitxml=results.xml --cov=. --cov-report=xml'
             }
