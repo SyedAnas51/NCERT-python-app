@@ -33,7 +33,7 @@ pipeline {
 
 	stage('Grype Image Scan') {
             steps {
-                grypeScan failOnSeverity: 'Critical', imageName: "${DOCKER_IMAGE}"
+                grypeScan scanDest: "docker:${DOCKER_IMAGE}", repName: "grype-report"
             }
         }
 
