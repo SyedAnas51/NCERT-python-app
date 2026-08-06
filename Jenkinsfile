@@ -33,15 +33,28 @@ pipeline {
 
 	
 
-	stage('Grype Image Scan') {
+		stage('Grype Image Scan') {
     steps {
         grypeScan(
             autoInstall: false,
             scanDest: "docker:${DOCKER_IMAGE}",
             repName: "grype-report"
         )
+
+        recordIssues(
+            enabledForFailure: true,
+            tools: [grype(pattern: 'grype-report')]
+        )
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'grype-report*', allowEmptyArchive: true
+        }
     }
 }
+	
+	
 
 
 	stage('Unit Tests') {
