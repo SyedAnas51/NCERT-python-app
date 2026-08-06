@@ -34,15 +34,14 @@ pipeline {
 	
 
 	stage('Grype Image Scan') {
-            steps {
-                sh 'grype $DOCKER_IMAGE --output table | tee grype-report.txt'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'grype-report.txt', allowEmptyArchive: true
-                }
-            }
-        }
+    steps {
+        grypeScan(
+            autoInstall: false,
+            scanDest: "docker:${DOCKER_IMAGE}",
+            repName: "grype-report"
+        )
+    }
+}
 
 
 	stage('Unit Tests') {
