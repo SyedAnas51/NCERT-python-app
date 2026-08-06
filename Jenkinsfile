@@ -30,17 +30,12 @@ pipeline {
                 }
             }
         }
-        stage('Grype Image Scan') {
+
+	stage('Grype Image Scan') {
             steps {
-                sh 'grype $DOCKER_IMAGE --output table | tee grype-report.txt'
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'grype-report.txt', allowEmptyArchive: true
-                }
+                grypeScanner failOnSeverity: 'CRITICAL', scanDest: "docker:${DOCKER_IMAGE}"
             }
         }
-
 
 
 
