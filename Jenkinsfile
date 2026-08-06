@@ -31,11 +31,17 @@ pipeline {
             }
         }
 
+	
+
 	stage('Grype Image Scan') {
-            steps {
-                grypeScan scanDest: "docker:${DOCKER_IMAGE}", repName: "grype-report"
-            }
-        }
+    steps {
+        grypeScan(
+            autoInstall: true,
+            scanDest: "docker:${DOCKER_IMAGE}",
+            repName: "grype-report"
+            )
+    		}
+	}
 
 
 
