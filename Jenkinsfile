@@ -36,13 +36,22 @@ pipeline {
 	stage('Grype Image Scan') {
     steps {
         grypeScan(
-            autoInstall: true,
+            autoInstall: false,
             scanDest: "docker:${DOCKER_IMAGE}",
             repName: "grype-report"
             )
     		}
 	}
 
+
+	post {
+    always {
+        recordIssues(
+            tools: [grype()],
+            aggregatingResults: true
+        )
+    }
+}
 
 
 
