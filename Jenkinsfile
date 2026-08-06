@@ -33,7 +33,8 @@ pipeline {
 
 	
 
-		stage('Grype Image Scan') {
+	
+	stage('Grype Image Scan') {
     steps {
         grypeScan(
             autoInstall: false,
@@ -43,7 +44,11 @@ pipeline {
 
         recordIssues(
             enabledForFailure: true,
-            tools: [grype(pattern: 'grype-report')]
+            tools: [
+                grype(
+                    pattern: '**/grype-report.json'
+                )
+            ]
         )
     }
 
@@ -53,8 +58,8 @@ pipeline {
         }
     }
 }
-	
-	
+
+		
 
 
 	stage('Unit Tests') {
