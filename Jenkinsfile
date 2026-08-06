@@ -44,16 +44,6 @@ pipeline {
 	}
 
 
-	post {
-    always {
-        recordIssues(
-            tools: [grype()],
-            aggregatingResults: true
-        )
-    }
-}
-
-
 
 	stage('Unit Tests') {
             steps {
